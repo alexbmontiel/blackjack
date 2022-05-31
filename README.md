@@ -1,2 +1,2 @@
-####What is the house edge in Blackjack?
+#### What is the house edge in Blackjack?
 Under optimal strategy
