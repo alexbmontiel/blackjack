@@ -4,10 +4,9 @@ dealer's hand. The player's hand is played optimally according to
 the dealer's face up card. The dealer's hand follows traditional
 casino rules.
 """
-
-import blackjack
-import checks
-import utils
+import src.blackjack as blackjack
+import src.checks as checks
+import src.utils as utils
 
 
 def player_hand(player, dealer, deck):
@@ -34,7 +33,7 @@ def player_hand(player, dealer, deck):
 
     # Second check: Split?
     if len(player.card_types) == 1:
-        #check split table
+        # Check split table
         split = checks.check_split(player, dealer)
 
         if split is True:
@@ -75,7 +74,7 @@ def player_hand(player, dealer, deck):
     while hit is not False:
         if player.total > 21:
             if "Ace" in player.card_types:
-                #replace with 1
+                # Replace with 1
                 player = utils.replace_ace(player)
                 print("Replace Ace")
                 print(f"Player total: {player.total}")
@@ -135,20 +134,3 @@ def dealer_hand(dealer, deck):
 
     print("Action: Stand")
     return (dealer.total, 1)
-
-
-if __name__ == "__main__":
-    test = None
-    while test is None:
-        player = blackjack.Hand()
-        dealer = blackjack.Hand()
-        deck = blackjack.Deck()
-        deck.shuffle()
-        dealer.add(deck.draw())
-        player.add(deck.draw())
-        dealer.add(deck.draw())
-        player.add(deck.draw())
-#        test = player_hand(player, dealer, deck)
-        test = dealer_hand(dealer, deck)
-        print(test)
-

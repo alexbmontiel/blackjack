@@ -1,18 +1,24 @@
 """
-This module contains the code to actually play a hand of blackjack 
+This module contains the code to actually play a hand of blackjack
 and return the results.
 """
+import src.blackjack as blackjack
+import src.strategies as strategies
+import src.checks as checks
+
+import sys
+import os
 
 
-import blackjack
-import strategies
-import checks
-import multiprocessing
-import time
+def play_hand(verbose: bool):
+    """Play a hand of blackjack.
 
-def play_hand():
-    """Play a hand of blackjack
+    Args:
+      verbose (bool): Optionally suppress print statements
     """
+    if verbose is False:
+        sys.stdout = open(os.devnull, "w")
+
     player = blackjack.Hand()
     dealer = blackjack.Hand()
 
@@ -36,18 +42,18 @@ def play_hand():
         print(f"Dealer's hidden card: {dealer.cards[0].show()}")
         print("Both blackjack: Tie")
 
-        return (0, 0, 0)
+        return (0, 0, 0, 0)
 
     elif player_blackjack is True:
         print("Player blackjack: Win")
 
-        return (1, 1, 1.5)
+        return (1, 1, 1.5, 0)
 
     elif dealer_blackjack is True:
         print(f"Dealer's hidden card: {dealer.cards[0].show()}")
         print("Dealer blackjack: Loss")
 
-        return (1, 0, -1)
+        return (1, 0, 0, 1)
 
     print("Player's turn")
     player_hand = strategies.player_hand(player, dealer, deck)
@@ -57,9 +63,10 @@ def play_hand():
         print("Busted: Loss")
         wins = 0
         hands = 1
-        payout = -1 * len(player_hand)
+        payout = 0
+        loss = len(player_hand)
 
-        return (hands, wins, payout)
+        return (hands, wins, payout, loss)
 
     # Check for all blackjacks
     elif all(i[1] == 1.5 for i in player_hand):
@@ -67,8 +74,9 @@ def play_hand():
         hands = 1
         wins = 1
         payout = 1.5 * len(player_hand)
+        loss = 0
 
-        return (hands, wins, payout)
+        return (hands, wins, payout, loss)
 
     print("Dealer's turn")
     dealer_hand = strategies.dealer_hand(dealer, deck)
@@ -78,12 +86,14 @@ def play_hand():
         hands = 1
         wins = 1
         payout = len(player_hand)
+        loss = 0
 
-        return (hands, wins, payout)
+        return (hands, wins, payout, loss)
 
     hands = 0
     wins = 0
     payout = 0
+    loss = 0
     dealer_total = dealer_hand[0]
     print(f"Dealer total: {dealer_total}")
     for i in player_hand:
@@ -96,7 +106,7 @@ def play_hand():
         elif i[0] < dealer_hand[0]:
             print("Loss")
             hands += 1
-            payout -= multiplier
+            loss += multiplier
 
         else:
             print("Win")
@@ -104,29 +114,6 @@ def play_hand():
             wins += 1
             payout += multiplier
 
-    return (hands, wins, payout)
+    sys.stdout = sys.__stdout__
 
-
-if __name__ == "__main__":
-    hands = 0
-    wins = 0
-    payout = 0
-
-    tracker = (hands, wins, payout)
-    for i in range(0, 1000000):
-        results = play_hand()
-        tracker = [sum(x) for x in zip(results, tracker)]
-#        hands += results[0]
-#        wins += results[1]
-#        payout += results[2]
-
-    hands = tracker[0]
-    wins = tracker[1]
-    payout = tracker[2]
-
-    print(f"Hands: {hands}")
-    print(f"Wins: {wins}")
-    print(f"Payout: {payout}")
-    print(f"Win rate: {wins / 1000000}")
-    print(f"House win rate: {(hands - wins) / 1000000}")
-
+    return (hands, wins, payout, loss)

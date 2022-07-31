@@ -1,4 +1,4 @@
-import blackjack
+import src.blackjack as blackjack
 
 
 def replace_ace(hand: blackjack.Hand) -> blackjack.Hand:
@@ -12,4 +12,3 @@ def replace_ace(hand: blackjack.Hand) -> blackjack.Hand:
     new_hand = blackjack.Hand(*cards)
 
     return new_hand
-
