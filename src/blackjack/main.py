@@ -3,7 +3,7 @@ This module contains the command line argument parsing tools.
 """
 import argparse
 
-import src.loop as loop
+import src.blackjack.loop as loop
 
 
 parser = argparse.ArgumentParser(
@@ -14,6 +14,7 @@ parser.add_argument(
     "-n",
     "--n_hands",
     type=int,
+    default=1000,
     help="Number of hands (default: 1000)"
 )
 parser.add_argument(

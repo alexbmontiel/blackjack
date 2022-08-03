@@ -4,9 +4,9 @@ dealer's hand. The player's hand is played optimally according to
 the dealer's face up card. The dealer's hand follows traditional
 casino rules.
 """
-import src.blackjack as blackjack
-import src.checks as checks
-import src.utils as utils
+import src.blackjack.blackjack as blackjack
+import src.blackjack.checks as checks
+import src.blackjack.utils as utils
 
 
 def player_hand(player, dealer, deck):

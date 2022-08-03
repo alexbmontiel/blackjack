@@ -6,7 +6,7 @@ import sys
 from joblib import Parallel, delayed
 from multiprocessing import cpu_count
 
-import src.game as game
+import src.blackjack.game as game
 
 
 def main(

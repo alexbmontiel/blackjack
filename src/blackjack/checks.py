@@ -8,8 +8,8 @@ Note: We assume we can only see the dealer's second card, hence the line
 in most functions in this module. This grabs the first index (card number)
 of the dealer's second card."""
 
-import src.tables as tables
-import src.blackjack as blackjack
+import src.blackjack.tables as tables
+import src.blackjack.blackjack as blackjack
 
 
 def check_blackjack(player: blackjack.Hand) -> bool:

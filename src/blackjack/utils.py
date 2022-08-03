@@ -1,4 +1,4 @@
-import src.blackjack as blackjack
+import src.blackjack.blackjack as blackjack
 
 
 def replace_ace(hand: blackjack.Hand) -> blackjack.Hand:

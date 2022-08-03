@@ -2,9 +2,9 @@
 This module contains the code to actually play a hand of blackjack
 and return the results.
 """
-import src.blackjack as blackjack
-import src.strategies as strategies
-import src.checks as checks
+import src.blackjack.blackjack as blackjack
+import src.blackjack.strategies as strategies
+import src.blackjack.checks as checks
 
 import sys
 import os
